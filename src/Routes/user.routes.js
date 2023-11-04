@@ -94,13 +94,17 @@ async function userInfoAndClaimedDealsHandler(req, res, next) {
 }
 
 // profileImage
-userRoutes.post('/profileImage', uploadToMulter.single('image'), uploadToCloudinary , async (req, res , next) => {
+userRoutes.post('/profileImage/:id', bearerAuth ,uploadToMulter.single('image'), uploadToCloudinary , async (req, res , next) => {
      try{
-          console.log(req.image);
-          res.status(200).json('image uploaded')
+          const img = req.image
+          const ID = req.params.id
+          const addImg = await usersTable.update({img},{where :{ID},returning : true})
+          res.status(200).json({
+               message: 'image uploaded',
+               img : addImg.img
+          })
      } catch (err) {
-          console.log('================================== err');
-          // next(err)
+          next(err)
      }
 })
 

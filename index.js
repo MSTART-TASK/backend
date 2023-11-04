@@ -1,7 +1,7 @@
 'use strict';
 const { configSequelize } = require("./src/Model");
 const { Start } = require("./src/server");
-const port = process.env.PORT
+const port = process.env.PORT || 4000
 
 require('dotenv').config
 

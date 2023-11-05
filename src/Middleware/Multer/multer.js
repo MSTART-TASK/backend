@@ -11,7 +11,6 @@ cloudinary.config({
 
 const storageProfile = multer.diskStorage({
      filename: function (req, file, cb) {
-          console.log(file);
           cb(null, file.originalname);
      },
 });
@@ -40,11 +39,9 @@ function checkFileType(file, cb) {
 async function uploadToCloudinary(req, res, next) {
      try {
           const result = await cloudinary.uploader.upload(req.file.path);
-          console.log('================================ result' , result);
           req.image = result.secure_url;
           next();
      } catch (err) {
-          console.log('================================ err c');
           console.log(err);
        next(err);
      }
